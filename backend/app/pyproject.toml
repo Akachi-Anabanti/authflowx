@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = ["Akachi Anabanti <akachi.anabanti@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["all"], version = "^0.104.0"}
+uvicorn = "^0.23.2"
+gunicorn = "^21.2.0"
+python-dotenv = "^1.0.0"
+sqlalchemy = "^2.0.22"
+emails = "^0.6"
+pyjwt = {extras = ["crypto"], version = "^2.8.0"}
+celery = "^5.3.4"
+raven = "^6.10.0"
+tenacity = "^8.2.3"
+alembic = "^1.12.0"
+pydantic-settings = "^2.0.3"
+psycopg2-binary = "^2.9.9"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.6.1"
+black = "^23.10.0"
+isort = "^5.12.0"
+autoflake = "^2.2.1"
+pytest = "^7.4.2"
+sqlalchemy-stubs = "^0.4"
+pytest-cov = "^4.1.0"
+flake8 = "^6.1.0"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+line_length = 88
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
