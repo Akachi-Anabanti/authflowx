@@ -1,17 +1,18 @@
 services:
   - name: proxy
     image: traefik:v2.2
-    env:
-      - TRAEFIK_TAG=${TRAEFIK_TAG}
-      - DOMAIN=${DOMAIN}
+    env: 
+      TRAEFIK_TAG: ${TRAEFIK_TAG}
+      DOMAIN: ${DOMAIN}
       # Add other environment variables here as needed
     secrets:
       - name: TRAEFIK_PUBLIC_NETWORK
-        path: /var/run/docker.sock
+        mountPath: /var/run/docker.sock
     ports:
-      - 80
-      - 443
-    startCommand: ["traefik", "--configFile", "/etc/traefik/traefik.toml"]
+      - name: http
+        port: 80
+      - name: https
+        port: 443
     healthCheck:
       path: /
       port: 80
@@ -19,13 +20,14 @@ services:
 
   - name: db
     image: postgres:12
-    env:
-      - PGDATA=/var/lib/postgresql/data/pgdata
+    env: 
+      PGDATA: /var/lib/postgresql/data/pgdata
       # Add other environment variables here as needed
     secrets:
       - name: .env
     ports:
-      - 5432
+      - name: postgres
+        port: 5432
     healthCheck:
       path: /
       port: 5432
@@ -38,9 +40,10 @@ services:
     secrets:
       - name: .env
     ports:
-      - 5050
+      - name: pgadmin
+        port: 5050
     dependsOn:
-      - service: db
+      - name: db
     healthCheck:
       path: /
       port: 5050
@@ -52,12 +55,13 @@ services:
   - name: flower
     image: mher/flower
     env:
-      - BROKER=amqp://guest@queue:5672//
+      BROKER: amqp://guest@queue:5672//
       # Add other environment variables here as needed
     secrets:
       - name: .env
     ports:
-      - 5555
+      - name: flower
+        port: 5555
     healthCheck:
       path: /
       port: 5555
@@ -65,12 +69,15 @@ services:
 
   - name: backend
     image: ${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}
-    env:
-      - SERVER_NAME=${DOMAIN?Variable not set}
-      - SERVER_HOST=https://${DOMAIN?Variable not set}
+    env: 
+      SERVER_NAME: ${DOMAIN?Variable not set}
+      SERVER_HOST: https://${DOMAIN?Variable not set}
       # Add other environment variables here as needed
     secrets:
       - name: .env
+    ports:
+      - name: backend
+        port: 80
     healthCheck:
       path: /
       port: 80
@@ -78,9 +85,9 @@ services:
 
   - name: celeryworker
     image: ${DOCKER_IMAGE_CELERYWORKER?Variable not set}:${TAG-latest}
-    env:
-      - SERVER_NAME=${DOMAIN?Variable not set}
-      - SERVER_HOST=https://${DOMAIN?Variable not set}
+    env: 
+      SERVER_NAME: ${DOMAIN?Variable not set}
+      SERVER_HOST: https://${DOMAIN?Variable not set}
       # Add other environment variables here as needed
     secrets:
       - name: .env
@@ -92,7 +99,7 @@ services:
   - name: frontend
     image: ${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}
     env:
-      - FRONTEND_ENV=production
+      FRONTEND_ENV: production
       # Add other environment variables here as needed
     healthCheck:
       path: /
