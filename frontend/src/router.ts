@@ -6,14 +6,14 @@ import RouterComponent from './components/RouterComponent.vue';
 
 Vue.use(Router);
 
-let router = new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path:'/',
+      path: '/',
       component: () => import(/* webpackChunkName: "start" */ './views/main/Start.vue'),
-      children:[
+      children: [
         {
           path: '/login',
           // route level code-splitting
@@ -70,12 +70,12 @@ let router = new Router({
             },
           ],
         },
-      ]
+      ],
     },
     {
-      path:'/*', redirect:'/'
-    }
+      path: '/*', redirect: '/',
+    },
   ],
 });
 
-export default router
+export default router;

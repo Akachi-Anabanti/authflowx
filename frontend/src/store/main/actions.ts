@@ -24,16 +24,16 @@ export const actions = {
         try {
             const response = await api.createUser(payload);
 
-            if (response.status === 201){
+            if (response.status === 201) {
                 commitAddNotification(context, { content: 'User successfully created', color: 'success' });
             }
             await dispatchLogIn(context);
-            
+
         } catch (error) {
             await dispatchCheckApiError(context, error);
         }
     },
-    
+
     async actionLogIn(context: MainContext) {
         const token = getCookieToken();
         if (token) {
@@ -156,4 +156,4 @@ export const dispatchLogOut = dispatch(actions.actionLogOut);
 export const dispatchUserLogOut = dispatch(actions.actionUserLogOut);
 export const dispatchRouteLoggedIn = dispatch(actions.actionRouteLoggedIn);
 export const dispatchRouteLogOut = dispatch(actions.actionRouteLogOut);
-export const dispatchRegister = dispatch(actions.actionRegister)
+export const dispatchRegister = dispatch(actions.actionRegister);

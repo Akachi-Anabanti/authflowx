@@ -43,5 +43,5 @@ export const commitAddNotification = commit(mutations.addNotification);
 export const commitRemoveNotification = commit(mutations.removeNotification);
 export const commitSetLoggedIn = commit(mutations.setLoggedIn);
 export const commitSetLogInError = commit(mutations.setLogInError);
-export const commitSetRegisterError =commit(mutations.setRegisterError);
+export const commitSetRegisterError = commit(mutations.setRegisterError);
 export const commitSetToken = commit(mutations.setToken);

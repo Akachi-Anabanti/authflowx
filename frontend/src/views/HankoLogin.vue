@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { register, Hanko } from "@teamhanko/hanko-elements";
+import { register, Hanko } from '@teamhanko/hanko-elements';
 import { appName, hankoApi } from '@/env';
 import { dispatchRegister} from '@/store/main/actions';
 import { IUserProfileCreate } from '@/interfaces';
@@ -32,7 +32,7 @@ export default class HankoAuthView extends Vue {
   private hankoApi: string = hankoApi;
 
   public hanko = new Hanko(this.hankoApi);
-
+ 
   public async mounted() {
     try {
       await register(this.hankoApi);
@@ -47,13 +47,13 @@ export default class HankoAuthView extends Vue {
 
     if (await this.$validator.validateAll()) {
       const updatedProfile: IUserProfileCreate = {
-        uuid:user.id,
+        uuid: user.id,
         email: user.email,
       };
-      updatedProfile.is_active=true;
-      await dispatchRegister(this.$store,updatedProfile);
+      updatedProfile.is_active = true;
+      await dispatchRegister(this.$store, updatedProfile);
     }
-    
+
   }
 }
 </script>

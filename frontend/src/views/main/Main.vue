@@ -109,8 +109,8 @@ import { readDashboardMiniDrawer, readDashboardShowDrawer, readHasAdminAccess } 
 import { commitSetDashboardShowDrawer, commitSetDashboardMiniDrawer } from '@/store/main/mutations';
 import { dispatchUserLogOut } from '@/store/main/actions';
 
-//For Hanko logout functionality
-import { Hanko } from "@teamhanko/hanko-elements";
+// For Hanko logout functionality
+import { Hanko } from '@teamhanko/hanko-elements';
 const hanko = new Hanko(hankoApi);
 
 const routeGuardMain = async (to, from, next) => {
@@ -163,12 +163,12 @@ export default class Main extends Vue {
   }
 
   public async logout() {
-    
+
     hanko.user.logout().catch((error) => {
     // handle error
   });
     await dispatchUserLogOut(this.$store);
- 
+
   }
 }
 </script>

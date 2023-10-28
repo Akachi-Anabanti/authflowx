@@ -4,7 +4,7 @@ export interface IUserProfile {
     is_superuser: boolean;
     full_name: string;
     uuid: string;
-    id:number;
+    id: number;
 }
 
 export interface IUserProfileUpdate {
@@ -15,7 +15,7 @@ export interface IUserProfileUpdate {
 }
 
 export interface IUserProfileCreate {
-    uuid:string,
+    uuid: string;
     email: string;
     full_name?: string;
     is_active?: boolean;
